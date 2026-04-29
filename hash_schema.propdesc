@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/windows/2006/propertydescription" schemaVersion="1.0">
+  <propertyDescriptionList publisher="Custom" version="1.0">
+    <!-- 
+      formatID: A unique GUID identifying our property group 
+      propID: A unique integer ID within the group (typically 2 or higher, but any works if unique)
+    -->
+    <propertyDescription name="Custom.FileHash.MD5" formatID="{F8BFA532-6D39-44DB-9EFE-DEFECC584EBC}" propID="100">
+      <description>Computes and displays the MD5 hash of the file contents.</description>
+      <searchInfo inInvertedIndex="false" isColumn="true"/>
+      <typeInfo type="String" multipleValues="false" isViewable="true" isQueryable="false"/>
+      <labelInfo label="File Hash (MD5)" invitationText="Hash..."/>
+      <displayInfo displayType="String">
+        <!-- control="Default" allows generic string display without editable controls -->
+        <drawControl control="Default"/>
+        <editControl control="Default"/>
+      </displayInfo>
+    </propertyDescription>
+  </propertyDescriptionList>
+</schema>
