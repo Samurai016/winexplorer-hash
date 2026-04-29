@@ -8,7 +8,7 @@ A native Rust Windows Shell Extension that adds a "File Hash (MD5)" column to Ex
 - **Targeted**: Only activates for specific files, defined by the user.
 
 ## Configuration
-Customize behavior via Registry (`HKEY_CURRENT_USER\Software\ExplorerHash`):
+Customize behavior via Registry (`HKEY_CURRENT_USER\Software\WinExplorerHash`):
 - **Extensions**: Create a String (`REG_SZ`) value `Extensions`. Set to a comma-separated list of extensions (e.g., `.pdf,.png,.jpg`). *(Note: you must re-run `build_and_register.ps1` or `regsvr32` to apply changes to this key)*.
 - **Max File Size**: Create a DWORD/QWORD value `MaxFileSizeBytes`. Set to max size in bytes (e.g. `10485760` for 10MB).
 

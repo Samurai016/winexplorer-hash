@@ -81,7 +81,7 @@ fn get_max_file_size() -> u64 {
     let status = unsafe {
         RegOpenKeyExW(
             HKEY_CURRENT_USER,
-            w!("Software\\ExplorerHash"),
+            w!("Software\\WinExplorerHash"),
             0,
             KEY_READ,
             &mut hkey,
@@ -280,7 +280,7 @@ fn get_extensions_to_register() -> Vec<String> {
     let status = unsafe {
         RegOpenKeyExW(
             HKEY_CURRENT_USER,
-            w!("Software\\ExplorerHash"),
+            w!("Software\\WinExplorerHash"),
             0,
             KEY_READ,
             &mut hkey,
