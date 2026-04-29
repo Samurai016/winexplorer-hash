@@ -20,7 +20,7 @@ use windows::{
             Registry::{
                 RegCloseKey, RegCreateKeyExW, RegDeleteTreeW, RegSetValueExW, HKEY, HKEY_CLASSES_ROOT,
                 KEY_ALL_ACCESS, REG_OPTION_NON_VOLATILE, REG_SZ,
-                RegOpenKeyExW, RegQueryValueExW, HKEY_CURRENT_USER, KEY_READ, REG_QWORD, REG_DWORD,
+                RegOpenKeyExW, RegQueryValueExW, HKEY_CURRENT_USER, KEY_READ, REG_QWORD, REG_DWORD, REG_VALUE_TYPE,
             },
         },
         UI::Shell::PropertiesSystem::{
@@ -91,26 +91,26 @@ fn get_max_file_size() -> u64 {
     if status.is_ok() {
         let mut data = [0u8; 8];
         let mut data_size = 8u32;
-        let mut reg_type = 0u32;
+        let mut reg_type = REG_VALUE_TYPE(0);
         
         let query_status = unsafe {
             RegQueryValueExW(
                 hkey,
                 w!("MaxFileSizeBytes"),
                 None,
-                Some(&mut reg_type),
+                Some(&mut reg_type as *mut _),
                 Some(data.as_mut_ptr()),
-                Some(&mut data_size),
+                Some(&mut data_size as *mut _),
             )
         };
 
         unsafe { let _ = RegCloseKey(hkey); }
 
         if query_status.is_ok() {
-            if reg_type == REG_QWORD.0 && data_size == 8 {
+            if reg_type == REG_QWORD && data_size == 8 {
                 let bytes: [u8; 8] = data.try_into().unwrap();
                 return u64::from_ne_bytes(bytes);
-            } else if reg_type == REG_DWORD.0 && data_size == 4 {
+            } else if reg_type == REG_DWORD && data_size == 4 {
                 let bytes: [u8; 4] = data[0..4].try_into().unwrap();
                 return u32::from_ne_bytes(bytes) as u64;
             }
@@ -289,29 +289,29 @@ fn get_extensions_to_register() -> Vec<String> {
 
     if status.is_ok() {
         let mut data_size = 0u32;
-        let mut reg_type = 0u32;
+        let mut reg_type = REG_VALUE_TYPE(0);
         
         let query_status = unsafe {
             RegQueryValueExW(
                 hkey,
                 w!("Extensions"),
                 None,
-                Some(&mut reg_type),
+                Some(&mut reg_type as *mut _),
                 None,
-                Some(&mut data_size),
+                Some(&mut data_size as *mut _),
             )
         };
 
-        if query_status.is_ok() && reg_type == REG_SZ.0 && data_size > 0 {
+        if query_status.is_ok() && reg_type == REG_SZ && data_size > 0 {
             let mut data = vec![0u8; data_size as usize];
             let query_status2 = unsafe {
                 RegQueryValueExW(
                     hkey,
                     w!("Extensions"),
                     None,
-                    Some(&mut reg_type),
+                    Some(&mut reg_type as *mut _),
                     Some(data.as_mut_ptr()),
-                    Some(&mut data_size),
+                    Some(&mut data_size as *mut _),
                 )
             };
 
