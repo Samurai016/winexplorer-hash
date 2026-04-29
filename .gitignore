@@ -15,3 +15,7 @@ Cargo.lock
 
 # Test binaries or arbitrary bins
 *.bin
+
+# Release archives
+*.zip
+create_release.ps1
