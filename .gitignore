@@ -18,4 +18,3 @@ Cargo.lock
 
 # Release archives
 *.zip
-create_release.ps1
